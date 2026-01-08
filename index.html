@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ruleta interactiva para seleccionar estudiantes en clase de forma aleatoria">
+    <title>Ruleta de Estudiantes - Selector Aleatorio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">🎯 Ruleta de Estudiantes</h1>
+            <p class="subtitle">¡Selecciona un estudiante de forma aleatoria!</p>
+            <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Roulette Section -->
+            <section class="roulette-section">
+                <div class="roulette-container">
+                    <div class="roulette-pointer">▼</div>
+                    <canvas id="rouletteCanvas" width="400" height="400"></canvas>
+                    <button id="spinButton" class="spin-button">
+                        <span class="spin-icon">🎲</span>
+                        <span class="spin-text">GIRAR RULETA</span>
+                    </button>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="noRepeatMode">
+                        <span class="checkmark"></span>
+                        <span class="label-text">Modo sin repetir</span>
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="powerUpsMode">
+                        <span class="checkmark"></span>
+                        <span class="label-text">⚡ Power-Ups Activados</span>
+                    </label>
+                    <button id="resetHistory" class="control-button">
+                        <span>🔄 Reiniciar Historial</span>
+                    </button>
+                </div>
+
+                <!-- Power-Up Banner -->
+                <div id="powerUpBanner" class="power-up-banner hidden">
+                    <div class="power-up-content">
+                        <div class="power-up-icon">⚡</div>
+                        <div class="power-up-text">
+                            <div class="power-up-label">POWER-UP ACTIVADO</div>
+                            <div class="power-up-name" id="powerUpName"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History -->
+                <div class="history-section">
+                    <h3>📋 Historial de Selecciones</h3>
+                    <div id="historyList" class="history-list"></div>
+                </div>
+            </section>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Student Management -->
+                <div class="card">
+                    <h2 class="card-title">👥 Gestionar Estudiantes</h2>
+
+                    <div class="add-student-form">
+                        <input type="text" id="studentNameInput" placeholder="Nombre del estudiante" maxlength="30">
+                        <button id="addStudentButton" class="add-button">
+                            <span>➕ Añadir</span>
+                        </button>
+                    </div>
+
+                    <div class="student-count">
+                        Total: <span id="studentCount">0</span> estudiantes
+                    </div>
+
+                    <ul id="studentList" class="student-list"></ul>
+                </div>
+
+                <!-- Statistics -->
+                <div class="card">
+                    <h2 class="card-title">📊 Estadísticas</h2>
+                    <div id="statisticsList" class="statistics-list"></div>
+                </div>
+
+                <!-- Import/Export -->
+                <div class="card">
+                    <h2 class="card-title">💾 Datos</h2>
+                    <div class="data-buttons">
+                        <button id="exportButton" class="data-button">
+                            <span>📤 Exportar</span>
+                        </button>
+                        <button id="importButton" class="data-button">
+                            <span>📥 Importar</span>
+                        </button>
+                        <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Winner Modal -->
+    <div id="winnerModal" class="modal">
+        <div class="modal-content">
+            <div class="confetti-container" id="confettiContainer"></div>
+            <div class="trophy-icon" id="trophyIcon">🏆</div>
+            <h2 class="modal-title" id="modalTitle">¡Seleccionado!</h2>
+            <p class="winner-name" id="winnerName"></p>
+            <p class="power-up-description" id="powerUpDescription"></p>
+            <button id="closeModal" class="close-modal-button">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Canvas for confetti -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- Audio Elements -->
+    <audio id="spinSound" preload="auto">
+        <!-- Fallback: Will generate sound using Web Audio API -->
+    </audio>
+    <audio id="winnerSound" preload="auto">
+        <!-- Fallback: Will generate sound using Web Audio API -->
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
