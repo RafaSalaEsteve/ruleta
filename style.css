@@ -85,10 +85,15 @@ body {
     font-weight: 400;
 }
 
-.theme-toggle {
+.header-actions {
     position: absolute;
     top: 0;
     right: 0;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.theme-toggle {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -152,6 +157,26 @@ body {
     z-index: 10;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
     animation: bounce 2s infinite;
+    pointer-events: none;
+    line-height: 1;
+}
+
+.roulette-pointer.tick {
+    animation: pointerTick 0.12s ease-out;
+}
+
+@keyframes pointerTick {
+    0% {
+        transform: translateX(-50%) rotate(0deg);
+    }
+
+    50% {
+        transform: translateX(-50%) rotate(-14deg);
+    }
+
+    100% {
+        transform: translateX(-50%) rotate(0deg);
+    }
 }
 
 @keyframes bounce {
@@ -862,9 +887,10 @@ body {
         margin-bottom: 2rem;
     }
 
-    .theme-toggle {
-        position: relative;
-        margin: 1rem auto 0;
+    .header-actions {
+        position: static;
+        justify-content: center;
+        margin-top: 1rem;
     }
 
     .roulette-container {
@@ -906,5 +932,230 @@ body {
 
     .power-up-name {
         font-size: 1.2rem;
+    }
+}
+/* ================================
+   Extras: round info, hints, buttons, toast
+   ================================ */
+.round-info {
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-on-primary);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 0.6rem 1rem;
+    margin-top: -1rem;
+}
+
+.form-hint {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin: -0.5rem 0 1rem;
+}
+
+.data-buttons + .form-hint {
+    margin: 0.75rem 0 0;
+}
+
+.text-button {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.6rem;
+    background: transparent;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.text-button:hover:not(:disabled) {
+    color: var(--text-primary);
+    border-color: var(--accent-3);
+}
+
+.text-button.danger:hover:not(:disabled) {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+.text-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+button {
+    font-family: inherit;
+}
+
+button:focus-visible,
+input:focus-visible + .checkmark {
+    outline: 3px solid var(--accent-4);
+    outline-offset: 2px;
+}
+
+.student-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    margin-right: 0.75rem;
+}
+
+.student-item.picked .student-name {
+    opacity: 0.45;
+    text-decoration: line-through;
+}
+
+.delete-button {
+    flex-shrink: 0;
+}
+
+/* Disable editing controls while the wheel spins */
+.main-content.is-spinning .delete-button,
+.main-content.is-spinning .add-button,
+.main-content.is-spinning .control-button,
+.main-content.is-spinning .text-button,
+.main-content.is-spinning .data-button {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.stat-item {
+    position: relative;
+    overflow: hidden;
+    gap: 0.75rem;
+}
+
+.stat-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: var(--stat-fill, 0%);
+    background: linear-gradient(90deg, rgba(95, 39, 205, 0.12), rgba(69, 183, 209, 0.12));
+    transition: width 0.4s ease;
+}
+
+.stat-item > * {
+    position: relative;
+}
+
+.stat-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.stat-badges {
+    display: flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+.stat-bonus {
+    background: var(--accent-4);
+    color: white;
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.winner-name {
+    overflow-wrap: anywhere;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.close-modal-button.secondary {
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-4));
+}
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translate(-50%, 150%);
+    max-width: calc(100% - 2rem);
+    padding: 0.85rem 1.25rem;
+    border-radius: 12px;
+    background: #2d3748;
+    color: white;
+    font-weight: 600;
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.toast.visible {
+    transform: translate(-50%, 0);
+    opacity: 1;
+}
+
+.toast.success {
+    background: var(--success);
+}
+
+.toast.error {
+    background: var(--danger);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .roulette-pointer,
+    .spin-icon,
+    .power-up-icon,
+    .power-up-banner::before {
+        animation: none !important;
+    }
+}
+
+/* Prevent grid/flex children from overflowing narrow screens */
+.main-content > *,
+.add-student-form > * {
+    min-width: 0;
+}
+
+#studentNameInput {
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem 0.75rem;
+    }
+
+    .add-student-form {
+        flex-direction: column;
+    }
+
+    .spin-button {
+        width: 96px;
+        height: 96px;
+        border-width: 4px;
+    }
+
+    .spin-icon {
+        font-size: 1.6rem;
+    }
+
+    .spin-text {
+        font-size: 0.6rem;
+        letter-spacing: 0;
+    }
+
+    .roulette-pointer {
+        font-size: 2.25rem;
     }
 }

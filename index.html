@@ -18,9 +18,14 @@
         <header class="header">
             <h1 class="title">🎯 Ruleta de Estudiantes</h1>
             <p class="subtitle">¡Selecciona un estudiante de forma aleatoria!</p>
-            <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema">
-                <span class="theme-icon">🌙</span>
-            </button>
+            <div class="header-actions">
+                <button id="soundToggle" class="theme-toggle" type="button" aria-label="Silenciar sonido">
+                    <span class="theme-icon">🔊</span>
+                </button>
+                <button id="themeToggle" class="theme-toggle" type="button" aria-label="Cambiar tema" title="Cambiar tema">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
         </header>
 
         <!-- Main Content -->
@@ -29,8 +34,8 @@
             <section class="roulette-section">
                 <div class="roulette-container">
                     <div class="roulette-pointer">▼</div>
-                    <canvas id="rouletteCanvas" width="400" height="400"></canvas>
-                    <button id="spinButton" class="spin-button">
+                    <canvas id="rouletteCanvas" width="400" height="400" role="img" aria-label="Ruleta con los nombres de los estudiantes"></canvas>
+                    <button id="spinButton" class="spin-button" type="button" title="Girar (tecla Espacio)">
                         <span class="spin-icon">🎲</span>
                         <span class="spin-text">GIRAR RULETA</span>
                     </button>
@@ -48,13 +53,15 @@
                         <span class="checkmark"></span>
                         <span class="label-text">⚡ Power-Ups Activados</span>
                     </label>
-                    <button id="resetHistory" class="control-button">
+                    <button id="resetHistory" class="control-button" type="button">
                         <span>🔄 Reiniciar Historial</span>
                     </button>
                 </div>
 
+                <p id="roundInfo" class="round-info hidden" aria-live="polite"></p>
+
                 <!-- Power-Up Banner -->
-                <div id="powerUpBanner" class="power-up-banner hidden">
+                <div id="powerUpBanner" class="power-up-banner hidden" aria-live="polite">
                     <div class="power-up-content">
                         <div class="power-up-icon">⚡</div>
                         <div class="power-up-text">
@@ -78,37 +85,44 @@
                     <h2 class="card-title">👥 Gestionar Estudiantes</h2>
 
                     <div class="add-student-form">
-                        <input type="text" id="studentNameInput" placeholder="Nombre del estudiante" maxlength="30">
-                        <button id="addStudentButton" class="add-button">
+                        <input type="text" id="studentNameInput" placeholder="Nombre del estudiante"
+                            aria-label="Nombre del estudiante" autocomplete="off">
+                        <button id="addStudentButton" class="add-button" type="button">
                             <span>➕ Añadir</span>
                         </button>
                     </div>
+
+                    <p class="form-hint">Añade varios separándolos por comas o pega una columna de una hoja de cálculo.</p>
 
                     <div class="student-count">
                         Total: <span id="studentCount">0</span> estudiantes
                     </div>
 
                     <ul id="studentList" class="student-list"></ul>
+
+                    <button id="clearStudents" class="text-button danger" type="button">🗑️ Eliminar todos</button>
                 </div>
 
                 <!-- Statistics -->
                 <div class="card">
                     <h2 class="card-title">📊 Estadísticas</h2>
                     <div id="statisticsList" class="statistics-list"></div>
+                    <button id="resetStats" class="text-button" type="button">♻️ Borrar estadísticas</button>
                 </div>
 
                 <!-- Import/Export -->
                 <div class="card">
                     <h2 class="card-title">💾 Datos</h2>
                     <div class="data-buttons">
-                        <button id="exportButton" class="data-button">
+                        <button id="exportButton" class="data-button" type="button">
                             <span>📤 Exportar</span>
                         </button>
-                        <button id="importButton" class="data-button">
+                        <button id="importButton" class="data-button" type="button">
                             <span>📥 Importar</span>
                         </button>
-                        <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                        <input type="file" id="importFileInput" accept=".json,.txt,.csv,application/json,text/plain,text/csv" hidden>
                     </div>
+                    <p class="form-hint">Importa un JSON exportado o un .txt/.csv con un nombre por línea.</p>
                 </div>
             </aside>
         </main>
@@ -116,26 +130,24 @@
 
     <!-- Winner Modal -->
     <div id="winnerModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <div class="confetti-container" id="confettiContainer"></div>
             <div class="trophy-icon" id="trophyIcon">🏆</div>
             <h2 class="modal-title" id="modalTitle">¡Seleccionado!</h2>
             <p class="winner-name" id="winnerName"></p>
-            <p class="power-up-description" id="powerUpDescription"></p>
-            <button id="closeModal" class="close-modal-button">Cerrar</button>
+            <p class="power-up-description hidden" id="powerUpDescription"></p>
+            <div class="modal-actions">
+                <button id="spinAgainButton" class="close-modal-button secondary" type="button">🎲 Girar otra vez</button>
+                <button id="closeModal" class="close-modal-button" type="button">Cerrar</button>
+            </div>
         </div>
     </div>
 
     <!-- Canvas for confetti -->
     <canvas id="confettiCanvas"></canvas>
 
-    <!-- Audio Elements -->
-    <audio id="spinSound" preload="auto">
-        <!-- Fallback: Will generate sound using Web Audio API -->
-    </audio>
-    <audio id="winnerSound" preload="auto">
-        <!-- Fallback: Will generate sound using Web Audio API -->
-    </audio>
+    <!-- Toast notifications -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script src="script.js"></script>
 </body>
