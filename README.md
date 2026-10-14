@@ -14,8 +14,10 @@ Una aplicación web interactiva para seleccionar estudiantes de forma aleatoria 
 - 🎉 **Confetti**: Celebración visual con animación de confetti cuando se selecciona un estudiante
 - 👥 **Gestión de Estudiantes**: Añadir y eliminar estudiantes fácilmente
 - 🔄 **Modo Sin Repetir**: Opción para que no salgan estudiantes repetidos hasta que todos hayan participado
-- 📊 **Estadísticas**: Seguimiento de cuántas veces ha salido cada estudiante
-- 📋 **Historial**: Ver las últimas 10 selecciones
+- ⚡ **Power-Ups**: Sorpresas aleatorias al girar (velocidad x2, cámara lenta, punto extra, trabajo en equipo, segunda oportunidad)
+- 📊 **Estadísticas**: Seguimiento de cuántas veces ha salido cada estudiante y sus puntos extra ⭐
+- 📋 **Historial**: Ver las últimas 10 selecciones (se conserva al recargar)
+- ⌨️ **Atajos de teclado**: `Espacio` para girar, `Esc` para cerrar el resultado
 - 💾 **Persistencia de Datos**: Los datos se guardan automáticamente en el navegador
 - 📤 **Importar/Exportar**: Guarda y carga listas de estudiantes para diferentes clases
 - 🌙 **Tema Oscuro/Claro**: Cambia entre temas según tu preferencia
@@ -42,23 +44,35 @@ Una aplicación web interactiva para seleccionar estudiantes de forma aleatoria 
 
 ### Gestionar Estudiantes
 
-1. **Añadir estudiante**: Escribe el nombre en el campo de texto y haz clic en "➕ Añadir" o presiona Enter
+1. **Añadir estudiante**: Escribe el nombre en el campo de texto y haz clic en "➕ Añadir" o presiona Enter. Puedes añadir varios separados por comas o pegar una columna de nombres
 2. **Eliminar estudiante**: Haz clic en el botón "✕ Eliminar" junto al nombre del estudiante
 
 ### Girar la Ruleta
 
 1. Haz clic en el botón central "GIRAR RULETA"
-2. La ruleta girará con sonido durante 4 segundos
+2. La ruleta girará durante 4 segundos con un "clic" cada vez que pasa un nombre (también puedes pulsar `Espacio`)
 3. Se mostrará un modal con el estudiante seleccionado y confetti
 
 ### Modo Sin Repetir
 
-Activa la casilla "Modo sin repetir" para que no salgan estudiantes que ya han sido seleccionados. Una vez que todos hayan participado, el sistema se reiniciará automáticamente.
+Activa la casilla "Modo sin repetir" para que no salgan estudiantes que ya han sido seleccionados: la ruleta solo muestra a quienes faltan y verás cuántos quedan en la ronda. Una vez que todos hayan participado, empieza una ronda nueva automáticamente.
+
+### Power-Ups
+
+Activa "⚡ Power-Ups Activados" y, en aproximadamente una de cada tres tiradas, aparecerá una sorpresa:
+
+| Power-Up | Efecto |
+|---|---|
+| ⚡ Velocidad x2 | La ruleta gira el doble de rápido |
+| 🐢 Cámara lenta | La ruleta gira a cámara lenta para dar suspense |
+| ⭐ Punto extra | El seleccionado suma un punto extra en las estadísticas |
+| 🤝 Trabajo en equipo | Se elige también a un compañero para ayudar |
+| 🔄 Segunda oportunidad | El seleccionado se libra y la ruleta vuelve a girar al cerrar |
 
 ### Importar/Exportar Datos
 
-- **Exportar**: Guarda tus estudiantes y estadísticas en un archivo JSON
-- **Importar**: Carga un archivo JSON previamente exportado
+- **Exportar**: Guarda tus estudiantes, estadísticas, puntos extra e historial en un archivo JSON
+- **Importar**: Carga un archivo JSON previamente exportado, o un `.txt`/`.csv` con un nombre por línea
 
 ### Cambiar Tema
 
